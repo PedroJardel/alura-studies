@@ -1,10 +1,9 @@
 import ITarefa from '../../../types/tarefa'
-import style from '../Lista.module.scss'
+import style from './Item.module.scss'
 
 interface Props extends ITarefa {
     selecionaTarefa: (tarefaSelecionada: ITarefa) => void
 }
-
 // A criação do componente Item adere ao SRP Single Responsibility Principle
 // DRY Don't Repeat Yourself => evita repetição de código
 const Item = ({
@@ -15,12 +14,13 @@ const Item = ({
     id,
     selecionaTarefa
 }: Props) => {
-    console.log('Item atual: ', { tarefa, tempo, selecionado, completado, id });
 
     return (
         <li
-            className={style.item}
-            onClick={() => selecionaTarefa(
+            className={`${style.item} ${selecionado ? style.
+            itemSelecionado : ''} ${completado? style.
+            itemCompletado : ''}`}
+            onClick={() => !completado && selecionaTarefa(
                 {
                     tarefa,
                     tempo,
@@ -31,6 +31,8 @@ const Item = ({
             )}>
             <h3> {tarefa} </h3>
             <span> {tempo} </span>
+            {completado && <span className={style.concluido}
+            area-label="tarefa concluida"></span>}
         </li>
     )
 }
